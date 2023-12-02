@@ -50,7 +50,7 @@
         </div>
         </div>
     </section>
-<div class="max-w-screen-xl mx-auto px-4 md:px-8">
+<div class="max-w-screen-xl mx-auto px-4 md:px-8 mt-10">
     <div class="items-start justify-between md:flex">
         <div class="max-w-lg">
             <h3 class="text-gray-800 text-xl font-bold sm:text-2xl">All Collection</h3>
@@ -66,29 +66,36 @@
         <table class="w-full table-auto text-sm text-left">
             <thead class="text-gray-600 font-medium border-b">
                 <tr>
-                    <th class="py-3 pr-6">name</th>
-                    <th class="py-3 pr-6">date</th>
+                    <th class="py-3 pr-6">Name</th>
+                    <th class="py-3 pr-6">Description</th>
                     <th class="py-3 pr-6">status</th>
-                    <th class="py-3 pr-6">Purchase</th>
-                    <th class="py-3 pr-6">price</th>
-                    <th class="py-3 pr-6"></th>
+                    <th class="py-3 pr-6">Shop ID</th>
                 </tr>
             </thead>
             <tbody class="text-gray-600 divide-y">
-                <template x-for="(item, idx) in tableItems" :key="idx">
+            @foreach ($groups as $group)
                     <tr>
-                        <td class="pr-6 py-4 whitespace-nowrap" x-text="item.name"></td>
-                        <td class="pr-6 py-4 whitespace-nowrap" x-text="item.date"></td>
                         <td class="pr-6 py-4 whitespace-nowrap">
-                            <span :class="`px-3 py-2 rounded-full font-semibold text-xs ${item.status === 'Active' ? 'text-green-600 bg-green-50' : 'text-blue-600 bg-blue-50'}`" x-text="item.status"></span>
+                        {{ $group->name }}
                         </td>
-                        <td class="pr-6 py-4 whitespace-nowrap" x-text="item.plan"></td>
-                        <td class="pr-6 py-4 whitespace-nowrap" x-text="item.price"></td>
+                        <td class="pr-6 py-4 whitespace-nowrap">
+                            {{ $group->description }}
+                        </td>
+
+                        <td class="pr-6 py-4 whitespace-nowrap">
+                            <span :class="getStatusClasses($group->status)">
+                                {{ $group->status }}
+                            </span>
+                        </td>
+
+                        <td class="pr-6 py-4 whitespace-nowrap">
+                            {{ $group->shop_id }}
+                        </td>
                         <td class="text-right whitespace-nowrap">
                             <a href="javascript:void(0)" class="py-1.5 px-3 text-gray-600 hover:text-gray-500 duration-150 hover:bg-gray-50 border rounded-lg">Manage</a>
                         </td>
                     </tr>
-                </template>
+            @endforeach
             </tbody>
         </table>
     </div>
@@ -111,7 +118,9 @@
             document.getElementById('answer').value = '';
 
         }
-
+        function getStatusClasses(status) {
+            return status === '1' ? 'text-green-600 bg-green-50' : 'text-blue-600 bg-blue-50';
+        }
         function editGroup(button) {
             console.log(button.dataset);
             document.getElementById('create-group').classList.remove('hidden');
