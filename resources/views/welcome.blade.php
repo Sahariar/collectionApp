@@ -1,14 +1,15 @@
-@extends('shopify-app::layouts.default')
+@extends('layouts.master')
+
+@section('title', 'Collection')
 
 @section('content')
-    <!-- You are: (shop domain name) -->
-    <p>You are: {{ $shopDomain ?? Auth::user()->name }}</p>
+    <h2>Store FAQ</h2>
 @endsection
 
 @section('scripts')
     @parent
 
     <script>
-        actions.TitleBar.create(app, { title: 'Welcome' });
+        actions.TitleBar.create(app, { title: 'collection' });
     </script>
 @endsection

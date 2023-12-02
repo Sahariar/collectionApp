@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CollectionsController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware(['verify.shopify'])->name('home');
 
+Route::get('/shop', [ShopController::class , 'shopIndex'])->middleware(['verify.shopify'])->name('shop.index');
 
-Route::get('/shop', [CollectionsController::class , 'group.index'])->middleware(['verify.shopify'])->name('group.index');
+Route::get('/collections', [CollectionsController::class , 'groupIndex'])->middleware(['verify.shopify'])->name('group.index');
 
+Route::post('/collections', [CollectionsController::class , 'groupIndex'])->middleware(['verify.shopify'])->name('group.save');
