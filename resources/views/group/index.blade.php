@@ -54,10 +54,10 @@
     <div class="items-start justify-between md:flex">
         <div class="max-w-lg">
             <h3 class="text-gray-800 text-xl font-bold sm:text-2xl">All Collection</h3>
-            <p class="text-gray-600 mt-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <p class="text-gray-600 mt-2">Explore a world of possibilities with our diverse range of items, meticulously selected to cater to every taste and preference. From sleek modern designs that redefine contemporary aesthetics to timeless pieces that exude traditional charm, the All Collection has something for everyone.</p>
         </div>
         <div class="mt-3 md:mt-0">
-            <button class="inline-block px-4 py-2 text-white duration-150 font-medium bg-indigo-600 rounded-lg hover:bg-indigo-500 active:bg-indigo-700 md:text-sm"class="" onclick="showCreateGroup()">Add collection</button>
+            <button class="inline-block px-4 py-2 text-white duration-150 font-medium bg-indigo-600 rounded-lg hover:bg-indigo-500 active:bg-indigo-700 md:text-sm"class="" onclick="showCreateGroup()">Create collection</button>
 
         </div>
     </div>
@@ -68,8 +68,6 @@
                 <tr>
                     <th class="py-3 pr-6">Name</th>
                     <th class="py-3 pr-6">Description</th>
-                    <th class="py-3 pr-6">status</th>
-                    <th class="py-3 pr-6">Shop ID</th>
                 </tr>
             </thead>
             <tbody class="text-gray-600 divide-y">
@@ -81,18 +79,14 @@
                         <td class="pr-6 py-4 whitespace-nowrap">
                             {{ $group->description }}
                         </td>
-
-                        <td class="pr-6 py-4 whitespace-nowrap">
-                            <span :class="getStatusClasses($group->status)">
-                                {{ $group->status }}
-                            </span>
-                        </td>
-
-                        <td class="pr-6 py-4 whitespace-nowrap">
-                            {{ $group->shop_id }}
+                        <td class="text-right whitespace-nowrap">
+                        <button class="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg">
+                            Edit
+                        </button>
                         </td>
                         <td class="text-right whitespace-nowrap">
-                            <a href="javascript:void(0)" class="py-1.5 px-3 text-gray-600 hover:text-gray-500 duration-150 hover:bg-gray-50 border rounded-lg">Manage</a>
+                            <button class="py-2 px-3 font-medium text-white  duration-150 bg-green-500 hover:bg-green-100 hover:text-green-600 rounded-lg">Product
+                            </button>
                         </td>
                     </tr>
             @endforeach
@@ -117,9 +111,6 @@
             document.getElementById('question').value = '';
             document.getElementById('answer').value = '';
 
-        }
-        function getStatusClasses(status) {
-            return status === '1' ? 'text-green-600 bg-green-50' : 'text-blue-600 bg-blue-50';
         }
         function editGroup(button) {
             console.log(button.dataset);
