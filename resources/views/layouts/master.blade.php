@@ -16,7 +16,7 @@
 
 <body>
     <div class="">
-        <div class="bg-amber-200 mt-10">
+        <div class="bg-teal-50 mt-10">
             <div class="max-w-screen-xl mx-auto px-4 py-3 items-center justify-between text-black sm:flex md:px-8">
                 <div class="flex gap-x-4">
                     <div class="w-10 h-10 flex-none rounded-lg bg-gray-200 flex items-center justify-center">

@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory;
+    protected $fillable = ['name', 'description', 'collection_id', 'shop_id'];
+
+    public function collection()
+    {
+        return $this->belongsTo(Collection::class);
+    }
 }

@@ -2,39 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Group;
+use App\Models\collection;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Redirect;
 
 class CollectionsController extends Controller
 {
     //
-    public function groupIndex(Request $request){
+    public function collectionIndex(Request $request){
         //check if it is a POST request
         if ($request->isMethod('post')) {
 
-            $groupid = $request->groupid;
-            if ($groupid != 0) {
-                $group = Group::find($groupid);
+            $collectionid = $request->collectionid;
+            if ($collectionid != 0) {
+                $collection = collection::find($collectionid);
             } else {
-                $group = new Group();
+                $collection = new collection();
             }
 
-            $group->name = $request->name;
-            $group->description = $request->description;
-            $group->shop_id = auth()->user()->id;
-            $group->status = 1;
+            $collection->name = $request->name;
+            $collection->description = $request->description;
+            $collection->shop_id = auth()->user()->id;
 
-            $group->save();
-            $redirectUrl = getRedirectRoute('group.index');
+            $collection->save();
+            $redirectUrl = getRedirectRoute('collection.index');
             return redirect($redirectUrl);
         }
-        $groups = Group::where('shop_id', auth()->user()->id)->get();
-        return view('group.index', compact('groups'));
+        $collections = collection::where('shop_id', auth()->user()->id)->get();
+        return view('collection.index', compact('collections'));
 
     }
-    public function groupStore(Request $request){
 
+    public function product(Request $request, $collectionid) {
+        //get product for a collection
+        //check if this collection id belongs to shop id
+        $collections = collection::findorFail($collectionid);
+        $shop = $request->user();
+        if ($collections->shop_id != $request->user()->id) {
+            return Redirect::tokenRedirect('collection.index');
+        }
+
+        if ($request->isMethod('post')) {
+            $productid = $request->productid;
+            if ($productid != 0) {
+                $product = Product::find($productid);
+            } else {
+                $product = new Product();
+            }
+
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->shop_id = $shop->id;
+            $product->collection_id = $collectionid;
+
+            $product->save();
+
+            $redirectUrl = getRedirectRoute('collection.product', ['collectionId' => $collections->id]);
+            return redirect($redirectUrl);
+
+        }
+
+        $products = Product::where('collection_id', $collections->id)->get();
+        return view('collection.product', compact('products', 'collections'));
     }
 
 }
